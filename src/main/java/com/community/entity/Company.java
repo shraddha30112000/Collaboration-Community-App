@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -13,6 +14,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -56,6 +59,13 @@ public class Company {
     @JsonManagedReference
     private List<Post> posts = new ArrayList<>();
     
+	/*
+	 * @ManyToOne
+	 * 
+	 * @JsonBackReference
+	 * 
+	 * @JoinColumn(name = "admin_id") private Admin admin;
+	 */
     
 	public Long getId() {
 		return id;
@@ -134,4 +144,11 @@ public class Company {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		this.password = passwordEncoder.encode(this.password);
 	}
+
+	public Company() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 }

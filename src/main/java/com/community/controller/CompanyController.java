@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.community.Service.CompanyService;
 import com.community.entity.ApiResponse;
 import com.community.entity.Company;
-import com.community.exception.ResourceNotFoundException;
-
 import jakarta.validation.Valid;
 
 @RestController
@@ -51,8 +49,15 @@ public class CompanyController {
 	
 	//update company
 	@PutMapping("/{id}") 
-	public Company updateCompany(@Valid@PathVariable Long id, @RequestBody Company updatedCompany) { return
-			  companyService.updateCompany(id, updatedCompany); 
+	/*
+	 * public Company updateCompany(@Valid@PathVariable Long id, @RequestBody
+	 * Company updatedCompany) { return companyService.updateCompany(id,
+	 * updatedCompany); }
+	 */
+	public ResponseEntity<Company> updateCompany(@PathVariable Long id,
+	                                             @Valid @RequestBody Company company) {
+	    Company updatedCompany = this.companyService.updateCompany(id, company);
+	    return ResponseEntity.ok(updatedCompany);
 	}
 	
 	// Delete the single company by id

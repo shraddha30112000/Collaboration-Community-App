@@ -11,4 +11,7 @@ public interface PostService {
 	Optional<Post> getPostById(Long id);
 	Post updatePost(Long id, Post updatedPost);
 	void deletePost(Long id);
+	Post findByTitle(String title);
+	List<Post> serchPostByFirstLetter(String letter);
+	List<Post> getPostsByStatus(Boolean status);
 }

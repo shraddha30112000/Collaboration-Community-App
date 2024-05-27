@@ -10,16 +10,18 @@ import org.springframework.stereotype.Service;
 import com.community.Repository.PostRepository;
 import com.community.Service.PostService;
 import com.community.entity.Post;
+import com.community.exception.ResourceNotFoundException;
 
 @Service
 public class PostServiceImpl implements PostService{
 
+	
 	@Autowired
 	private PostRepository postRepository;
-	
+
 	@Override
 	public Post createPost(Post post) {
-		post.setDate(new Date());
+		post.setPostDate(new Date());
 		return postRepository.save(post);
 	}
 
@@ -30,7 +32,8 @@ public class PostServiceImpl implements PostService{
 
 	@Override
 	public Optional<Post> getPostById(Long id) {
-		return postRepository.findById(id);
+		return Optional.ofNullable(
+				postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "postId", id)));
 	}
 
 	@Override
@@ -41,7 +44,25 @@ public class PostServiceImpl implements PostService{
 
 	@Override
 	public void deletePost(Long id) {
-		postRepository.deleteById(id);
+		Post deletePost = this.postRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Post", "postId", id));
+		this.postRepository.delete(deletePost);
+	}
+
+	@Override
+	public Post findByTitle(String title) {
+		Optional<Post> post = postRepository.findByTitle(title);
+		return post.orElseThrow(() -> new RuntimeException("Post not found with title: " + title));
+	}
+
+	@Override
+	public List<Post> serchPostByFirstLetter(String letter) {
+		return postRepository.findByTitleStartingWith(letter);
 	}
 	
+	 @Override
+	    public List<Post> getPostsByStatus(Boolean status) {
+	        return postRepository.findByStatus(status);
+	    }
+		 
 }

@@ -7,11 +7,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -25,37 +26,50 @@ public class Post {
     @NotBlank(message = "Description is required")
     private String description;
 
-    @NotBlank(message = "State is required")
-    private String state;
+    @NotBlank(message = "title is required")
+    private String title;
 
-    @NotNull(message = "Date is required")
-    private Date date;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date postDate;
     
-    @NotNull(message = "Future Date is required")
     @Future
+    @Temporal(TemporalType.DATE)
     private Date FutureDate;
     
-    @NotBlank(message = "Status is required")
-    private String status;
+ 
+    private Boolean status;
+    
+    @NotBlank(message = "Skills are required")
+    private String skills;
 
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "company_id")
     private Company company;
-
+    
+	
+	/*
+	 * @ManyToOne
+	 * 
+	 * @JsonBackReference
+	 * 
+	 * @JoinColumn(name = "admin_id") private Admin admin;
+	 */
+	 
 	public Post(Long id, @NotBlank(message = "Description is required") String description,
-			@NotBlank(message = "State is required") String state,
-			@NotNull(message = "Date is required") Date date,
+			@NotBlank(message = "title is required") String title,
+			@NotNull(message = "Date is required") Date postDate,
 			Date FutureDate,
-			@NotBlank(message = "Status is required") String status, Company company) {
+			@NotBlank(message = "Status is required") Boolean status, Company company,String skills) {
 		super();
 		this.id = id;
 		this.description = description;
-		this.state = state;
-		this.date = date;
+		this.title = title;
+		this.postDate = postDate;
 		this.FutureDate = FutureDate;
 		this.status = status;
 		this.company = company;
+		this.skills = skills;
 	}
 
 	public Long getId() {
@@ -74,22 +88,15 @@ public class Post {
 		this.description = description;
 	}
 
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
 	
+	public Date getPostDate() {
+		return postDate;
+	}
+
+	public void setPostDate(Date postDate) {
+		this.postDate = postDate;
+	}
+
 	public Date getFutureDate() {
 		return FutureDate;
 	}
@@ -98,11 +105,11 @@ public class Post {
 		FutureDate = futureDate;
 	}
 
-	public String getStatus() {
+	public Boolean getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Boolean status) {
 		this.status = status;
 	}
 
@@ -114,10 +121,24 @@ public class Post {
 		this.company = company;
 	}
 
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getSkills() {
+		return skills;
+	}
+
+	public void setSkills(String skills) {
+		this.skills = skills;
+	}
+
 	public Post() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	
 }
