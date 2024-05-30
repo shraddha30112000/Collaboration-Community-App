@@ -59,13 +59,13 @@ public class Company {
     @JsonManagedReference
     private List<Post> posts = new ArrayList<>();
     
-	/*
-	 * @ManyToOne
-	 * 
-	 * @JsonBackReference
-	 * 
-	 * @JoinColumn(name = "admin_id") private Admin admin;
-	 */
+	
+	
+	  @ManyToOne
+	  @JsonBackReference
+	  @JoinColumn(name = "admin_id")
+	  private Admin admin;
+	 
     
 	public Long getId() {
 		return id;
@@ -149,6 +149,14 @@ public class Company {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
 	
 	
 }

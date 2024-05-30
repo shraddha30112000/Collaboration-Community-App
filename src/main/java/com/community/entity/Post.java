@@ -47,14 +47,11 @@ public class Post {
     @JoinColumn(name = "company_id")
     private Company company;
     
-	
-	/*
-	 * @ManyToOne
-	 * 
-	 * @JsonBackReference
-	 * 
-	 * @JoinColumn(name = "admin_id") private Admin admin;
-	 */
+//	  @ManyToOne
+//	  @JsonBackReference
+//	  @JoinColumn(name = "admin_id")
+//	  private Admin admin;
+	 
 	 
 	public Post(Long id, @NotBlank(message = "Description is required") String description,
 			@NotBlank(message = "title is required") String title,

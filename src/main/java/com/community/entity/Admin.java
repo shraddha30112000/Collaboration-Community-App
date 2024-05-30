@@ -37,17 +37,20 @@ public class Admin {
     private Date registerDate;
 
 	
-	/*
-	 * @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL, orphanRemoval =
-	 * true)
-	 * 
-	 * @JsonManagedReference private List<Company> companies = new ArrayList<>();
-	 * 
-	 * @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL, orphanRemoval =
-	 * true)
-	 * 
-	 * @JsonManagedReference private List<Post> posts = new ArrayList<>();
-	 */
+	
+	
+	  @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL, orphanRemoval =
+	  true)
+	  
+	 @JsonManagedReference 
+	 private List<Company> companies = new ArrayList<>();
+	  
+//	  @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL, orphanRemoval =
+//	  true)
+//	  
+//	  @JsonManagedReference
+//	  private List<Post> posts = new ArrayList<>();
+	 
 	 
     public long getId() {
         return id;
