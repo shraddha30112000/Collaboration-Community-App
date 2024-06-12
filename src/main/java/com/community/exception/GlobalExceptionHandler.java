@@ -14,20 +14,22 @@ import com.community.entity.ApiResponse;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ApiResponse>resourceNotFoundExceptionHandler(ResourceNotFoundException exception){
-        String message=exception.getMessage();
-        ApiResponse apiResponse=new ApiResponse(message,false);
-        return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.NOT_FOUND);
-    }
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String,String>>handleMethodArgsNotValidException(MethodArgumentNotValidException exception){
-    Map<String,String>stringMap=new HashMap<>();
-    exception.getBindingResult().getAllErrors().forEach((error)->{
-        String fieldName=((FieldError)error).getField();
-        String message=error.getDefaultMessage();
-        stringMap.put(fieldName,message);
-    });
-    return new ResponseEntity<Map<String,String>>(stringMap,HttpStatus.BAD_REQUEST);
-    }
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public ResponseEntity<ApiResponse> resourceNotFoundExceptionHandler(ResourceNotFoundException exception) {
+		String message = exception.getMessage();
+		ApiResponse apiResponse = new ApiResponse(message, false);
+		return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<Map<String, String>> handleMethodArgsNotValidException(
+			MethodArgumentNotValidException exception) {
+		Map<String, String> stringMap = new HashMap<>();
+		exception.getBindingResult().getAllErrors().forEach((error) -> {
+			String fieldName = ((FieldError) error).getField();
+			String message = error.getDefaultMessage();
+			stringMap.put(fieldName, message);
+		});
+		return new ResponseEntity<Map<String, String>>(stringMap, HttpStatus.BAD_REQUEST);
+	}
 }

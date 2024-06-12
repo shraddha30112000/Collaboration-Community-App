@@ -9,9 +9,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 import java.util.Date;
 
@@ -41,6 +43,13 @@ public class Post {
     
     @NotBlank(message = "Skills are required")
     private String skills;
+    
+    @Pattern(regexp="(^$|[0-9]{10})", message = "Invalid mobile number")
+    private String mobNumber;
+    
+    @Email(message = "Invalid email format")
+    @NotBlank(message = "Email is required")
+    private String email;
 
     @ManyToOne
     @JsonBackReference

@@ -1,6 +1,7 @@
 package com.community.Service;
 
 import java.util.List;
+
 import com.community.entity.Company;
 
 public interface CompanyService {
@@ -9,4 +10,7 @@ public interface CompanyService {
 	Company getCompanyById(Long id);
 	Company updateCompany(Long id, Company updatedCompany);
 	void deleteCompany(Long id);
+	void deleteCompanyByName(String name);
+	List<Company> serchCompanyByFirstLetter(String letter);
+	List<Company> getCompanyByName(String companyName);
 }

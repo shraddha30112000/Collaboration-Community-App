@@ -7,14 +7,15 @@ import org.springframework.stereotype.Service;
 import com.community.Repository.CompanyRepository;
 import com.community.Service.CompanyService;
 import com.community.entity.Company;
+import com.community.exception.CompanyNameNotFoundException;
 import com.community.exception.ResourceNotFoundException;
 
 @Service
-public class CompanyServiceImpl implements CompanyService{
+public class CompanyServiceImpl implements CompanyService {
 
 	@Autowired
 	private CompanyRepository companyRepository;
-	
+
 	@Override
 	public Company createCompnay(Company company) {
 		company.setDate(new Date());
@@ -26,31 +27,55 @@ public class CompanyServiceImpl implements CompanyService{
 	public List<Company> getAllCompanies() {
 		List<Company> company = this.companyRepository.findAll();
 		return company;
-		
+
 	}
 
 	@Override
 	public Company getCompanyById(Long id) {
-		return companyRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Company", "CompnayId", id));
+		return companyRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Company", "CompnayId", id));
 	}
 
 	@Override
 	public Company updateCompany(Long id, Company updatedCompany) {
-	    Company company = this.companyRepository.findById(id)
-	            .orElseThrow(() -> new ResourceNotFoundException("Company", "CompnayId", id));
-	    company.setName(updatedCompany.getName());
-	    company.setDomain(updatedCompany.getDomain());
-	    company.setEmail(updatedCompany.getEmail());
-	    company.setMobNumber(updatedCompany.getMobNumber());
-	    company.setPassword(updatedCompany.getPassword());
-	    company.setImage(updatedCompany.getImage());
-	    return this.companyRepository.save(company);
+		Company company = this.companyRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Company", "CompnayId", id));
+		company.setName(updatedCompany.getName());
+		company.setDomain(updatedCompany.getDomain());
+		company.setEmail(updatedCompany.getEmail());
+		company.setMobNumber(updatedCompany.getMobNumber());
+		company.setPassword(updatedCompany.getPassword());
+		company.setImage(updatedCompany.getImage());
+		return this.companyRepository.save(company);
 	}
-	
+
 	@Override
 	public void deleteCompany(Long id) {
-		Company deleteCompany=this.companyRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Company", "companyId", id));
+		Company deleteCompany = this.companyRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Company", "companyId", id));
 		this.companyRepository.delete(deleteCompany);
-		
+
 	}
+
+	@Override
+    public void deleteCompanyByName(String name) {
+        List<Company> companies = companyRepository.findByName(name);
+        if (companies.isEmpty()) {
+            throw new CompanyNameNotFoundException("Company", "name", name);
+        }
+        for (Company company : companies) {
+            companyRepository.delete(company);
+        }
+    }
+
+	@Override
+	public List<Company> serchCompanyByFirstLetter(String letter) {
+		return companyRepository.findByNameStartingWith(letter);
+	}
+
+	@Override
+	public List<Company> getCompanyByName(String companyName) {
+		return companyRepository.findByName(companyName);
+	}
+
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.community.Repository.AdminRepository;
 import com.community.Service.AdminService;
 import com.community.entity.Admin;
+import com.community.exception.ResourceNotFoundException;
 @Service
 public class AdminServiceImpl implements AdminService {
 	@Autowired
@@ -27,6 +28,12 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return adminRepository.findAll();
 		
+	}
+
+	@Override
+	public Admin getAdminById(Long id) {
+		return adminRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Admin", "AdminId", id));
 	}
 
 }

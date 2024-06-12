@@ -25,6 +25,4 @@ public class ApiResponse {
 		Success = success;
 		this.message = message;
 	}
-
-	
 }
